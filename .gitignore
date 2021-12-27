@@ -16,6 +16,7 @@ yarn-error.log
 
 /coverage
 .idea
+/src/.umi
 yarn.lock
 package-lock.json
 pnpm-lock.yaml

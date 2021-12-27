@@ -1,17 +1,11 @@
-﻿export default [
+export default [
   {
     path: '/user',
     layout: false,
     routes: [
       {
         path: '/user',
-        routes: [
-          {
-            name: 'login',
-            path: '/user/login',
-            component: './user/Login',
-          },
-        ],
+        routes: [{ name: '登录', path: '/user/login', component: './user/Login' }],
       },
       {
         component: './404',
@@ -20,20 +14,20 @@
   },
   {
     path: '/welcome',
-    name: 'welcome',
+    name: '欢迎',
     icon: 'smile',
     component: './Welcome',
   },
   {
     path: '/admin',
-    name: 'admin',
+    name: '管理页',
     icon: 'crown',
     access: 'canAdmin',
     component: './Admin',
     routes: [
       {
         path: '/admin/sub-page',
-        name: 'sub-page',
+        name: '二级管理页',
         icon: 'smile',
         component: './Welcome',
       },
@@ -43,10 +37,16 @@
     ],
   },
   {
-    name: 'list.table-list',
+    name: '查询表格',
     icon: 'table',
     path: '/list',
     component: './TableList',
+  },
+  {
+    name: '测试页',
+    icon: '',
+    path: '/test',
+    component: './account/center',
   },
   {
     path: '/',

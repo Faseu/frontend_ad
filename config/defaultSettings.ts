@@ -1,21 +1,24 @@
 import { Settings as LayoutSettings } from '@ant-design/pro-layout';
-
+// import LOGO_ICON from '../public/logo.svg'
 const Settings: LayoutSettings & {
   pwa?: boolean;
   logo?: string;
 } = {
-  navTheme: 'light',
-  // 拂晓蓝
-  primaryColor: '#1890ff',
   layout: 'mix',
   contentWidth: 'Fluid',
-  fixedHeader: false,
+  headerHeight: 48,
+  primaryColor: '#FE690C',
+  splitMenus: false,
   fixSiderbar: true,
+  fixedHeader: false,
+  navTheme: 'light',
   colorWeak: false,
-  title: 'Ant Design Pro',
+  title: '广告管理系统',
   pwa: false,
-  logo: 'https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg',
-  iconfontUrl: '',
+  logo: 'https://lxbpaper.oss-cn-beijing.aliyuncs.com/lxbpaper/machineupdate/logo%281%29.svg',
+  menu: {
+    locale: false,
+  },
 };
 
 export default Settings;

@@ -1,13 +1,10 @@
 // https://umijs.org/config/
 import { defineConfig } from 'umi';
 import { join } from 'path';
-
 import defaultSettings from './defaultSettings';
 import proxy from './proxy';
 import routes from './routes';
-
 const { REACT_APP_ENV } = process.env;
-
 export default defineConfig({
   hash: true,
   antd: {},
@@ -38,7 +35,10 @@ export default defineConfig({
   routes,
   // Theme for antd: https://ant.design/docs/react/customize-theme-cn
   theme: {
-    'root-entry-name': 'variable',
+    'primary-color': defaultSettings.primaryColor,
+    layout: defaultSettings.layout,
+    navTheme: defaultSettings.navTheme,
+    // 'root-entry-name': 'default',
   },
   // esbuild is father build tools
   // https://umijs.org/plugins/plugin-esbuild
@@ -65,7 +65,9 @@ export default defineConfig({
       projectName: 'swagger',
     },
   ],
-  nodeModulesTransform: { type: 'none' },
+  nodeModulesTransform: {
+    type: 'none',
+  },
   mfsu: {},
   webpack5: {},
   exportStatic: {},

@@ -1,36 +1,28 @@
-import { useIntl } from 'umi';
-import { GithubOutlined } from '@ant-design/icons';
 import { DefaultFooter } from '@ant-design/pro-layout';
 
 const Footer: React.FC = () => {
-  const intl = useIntl();
-  const defaultMessage = intl.formatMessage({
-    id: 'app.copyright.produced',
-    defaultMessage: '蚂蚁集团体验技术部出品',
-  });
-
+  const defaultMessage = '刘小白';
   const currentYear = new Date().getFullYear();
-
   return (
     <DefaultFooter
       copyright={`${currentYear} ${defaultMessage}`}
       links={[
         {
-          key: 'Ant Design Pro',
-          title: 'Ant Design Pro',
-          href: 'https://pro.ant.design',
+          key: '内容管理系统',
+          title: '内容管理系统',
+          href: 'https://cms.lxbznkj.com/',
           blankTarget: true,
         },
         {
-          key: 'github',
-          title: <GithubOutlined />,
-          href: 'https://github.com/ant-design/ant-design-pro',
+          key: '商品管理系统',
+          title: '商品管理系统',
+          href: 'http://ecshop.lxbznkj.com',
           blankTarget: true,
         },
         {
-          key: 'Ant Design',
-          title: 'Ant Design',
-          href: 'https://ant.design',
+          key: '代理商管理系统',
+          title: '代理商管理系统',
+          href: 'https://agent.lxbznkj.com/',
           blankTarget: true,
         },
       ]}

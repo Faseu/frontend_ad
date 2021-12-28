@@ -11,6 +11,7 @@ const reloadAuthorized = (): void => {
  * hard code
  * block need it。
  */
+// @ts-ignore
 window.reloadAuthorized = reloadAuthorized;
 
 export { reloadAuthorized };

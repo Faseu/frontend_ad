@@ -5,6 +5,8 @@ import type { RunTimeLayoutConfig } from 'umi';
 import { history } from 'umi';
 import RightContent from '@/components/RightContent';
 import Footer from '@/components/Footer';
+import fixMenuItemIcon from '@/utils/fixMenuItemIcon';
+import { queryMenuData } from './services/user/menu';
 import { currentUser as queryCurrentUser } from './services/ant-design-pro/api';
 
 const loginPath = '/user/login';
@@ -20,8 +22,10 @@ export const initialStateConfig = {
 export async function getInitialState(): Promise<{
   settings?: Partial<LayoutSettings>;
   currentUser?: API.CurrentUser;
+  menuData?: any | undefined;
   loading?: boolean;
   fetchUserInfo?: () => Promise<API.CurrentUser | undefined>;
+  fetchMenuData?: () => Promise<any>;
 }> {
   const fetchUserInfo = async () => {
     try {
@@ -32,11 +36,23 @@ export async function getInitialState(): Promise<{
     }
     return undefined;
   };
+  const fetchMenuData = async () => {
+    try {
+      const menuData = await queryMenuData();
+      return menuData.data;
+    } catch (error) {
+      history.push(loginPath);
+    }
+    return undefined;
+  };
   // 如果是登录页面，不执行
   if (history.location.pathname !== loginPath) {
     const currentUser = await fetchUserInfo();
+    const menuData = await fetchMenuData();
     return {
       fetchUserInfo,
+      fetchMenuData,
+      menuData,
       currentUser,
       settings: {},
     };
@@ -50,6 +66,15 @@ export async function getInitialState(): Promise<{
 // ProLayout 支持的api https://procomponents.ant.design/components/layout
 export const layout: RunTimeLayoutConfig = ({ initialState, setInitialState }) => {
   return {
+    menu: {
+      // locale: false,
+      // 每当 initialState?.currentUser?.userid 发生修改时重新执行 request
+      params: initialState,
+      // params, defaultMenuData
+      request: async () => {
+        return fixMenuItemIcon(initialState?.menuData);
+      },
+    },
     rightContentRender: () => <RightContent />,
     disableContentMargin: false,
     waterMarkProps: {

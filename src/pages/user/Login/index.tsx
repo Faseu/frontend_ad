@@ -1,76 +1,40 @@
 import { LockOutlined, MobileOutlined, UserOutlined } from '@ant-design/icons';
-import { Alert, message, Tabs } from 'antd';
+import { message, Tabs } from 'antd';
 import React, { useState } from 'react';
-import { ProFormCaptcha, ProFormCheckbox, ProFormText, LoginForm } from '@ant-design/pro-form';
-import { history, useModel } from 'umi';
+import ProForm, {
+  LoginForm,
+  ProFormCaptcha,
+  ProFormCheckbox,
+  ProFormText,
+} from '@ant-design/pro-form';
 import Footer from '@/components/Footer';
-import { login } from '@/services/ant-design-pro/api';
-import { getFakeCaptcha } from '@/services/ant-design-pro/login';
+import { getFakeCaptcha, login } from '@/services/user';
 import styles from './index.less';
-
-const LoginMessage: React.FC<{
-  content: string;
-}> = ({ content }) => (
-  <Alert
-    style={{
-      marginBottom: 24,
-    }}
-    message={content}
-    type="error"
-    showIcon
-  />
-);
+import { setToken } from '@/utils/token';
 
 const Login: React.FC = () => {
-  const [userLoginState, setUserLoginState] = useState<API.LoginResult>({});
   const [type, setType] = useState<string>('account');
-  const { initialState, setInitialState } = useModel('@@initialState');
 
-  const fetchUserInfo = async () => {
-    const userInfo = await initialState?.fetchUserInfo?.();
-
-    if (userInfo) {
-      await setInitialState((s) => ({ ...s, currentUser: userInfo }));
-    }
-  };
+  const [form] = ProForm.useForm();
 
   const handleSubmit = async (values: API.LoginParams) => {
     try {
-      // 登录
-      const msg = await login({ ...values, type });
-
-      if (msg.status === 'ok') {
-        const defaultLoginSuccessMessage = '登录成功！';
-        message.success(defaultLoginSuccessMessage);
-        await fetchUserInfo();
-        /** 此方法会跳转到 redirect 参数所在的位置 */
-
-        if (!history) return;
-        const { query } = history.location;
-        const { redirect } = query as {
-          redirect: string;
-        };
-        history.push(redirect || '/');
-        return;
-      }
-
-      console.log(msg); // 如果失败去设置用户错误信息
-
-      setUserLoginState(msg);
+      const { token } = await login({ ...values, type: 'web' });
+      setToken(token);
     } catch (error) {
       const defaultLoginFailureMessage = '登录失败，请重试！';
       message.error(defaultLoginFailureMessage);
     }
   };
 
-  const { status, type: loginType } = userLoginState;
   return (
     <div className={styles.container}>
       <div className={styles.content}>
         <LoginForm
           logo={<img alt="logo" src="/logo.svg" />}
           title="刘小白广告管理系统"
-          subTitle={'刘小白广告管理系统'}
+          subTitle={'  '}
+          form={form}
           initialValues={{
             autoLogin: true,
           }}
@@ -83,9 +47,6 @@ const Login: React.FC = () => {
             <Tabs.TabPane key="mobile" tab={'手机号登录'} />
           </Tabs>
 
-          {status === 'error' && loginType === 'account' && (
-            <LoginMessage content={'错误的用户名和密码(admin/ant.design)'} />
-          )}
           {type === 'account' && (
             <>
               <ProFormText
@@ -119,7 +80,6 @@ const Login: React.FC = () => {
             </>
           )}
 
-          {status === 'error' && loginType === 'mobile' && <LoginMessage content="验证码错误" />}
           {type === 'mobile' && (
             <>
               <ProFormText
@@ -127,7 +87,7 @@ const Login: React.FC = () => {
                   size: 'large',
                   prefix: <MobileOutlined className={styles.prefixIcon} />,
                 }}
-                name="mobile"
+                name="phone"
                 placeholder={'请输入手机号！'}
                 rules={[
                   {
@@ -153,24 +113,26 @@ const Login: React.FC = () => {
                   if (timing) {
                     return `${count} ${'秒后重新获取'}`;
                   }
-
                   return '获取验证码';
                 }}
-                name="captcha"
+                name="code"
                 rules={[
                   {
                     required: true,
                     message: '验证码是必填项！',
                   },
                 ]}
-                onGetCaptcha={async (phone) => {
+                onGetCaptcha={async () => {
                   const result = await getFakeCaptcha({
-                    phone,
+                    phone: form.getFieldValue('mobile'),
                   });
-                  if (result === false) {
-                    return;
-                  }
-                  message.success('获取验证码成功！验证码为：1234');
+                  // Todo
+                  console.log(result);
+                  // if (result === false) {
+                  //   return;
+                  // }
+                  // throw new Error('获取验证码错误');
+                  // message.success('获取验证码成功！');
                 }}
               />
             </>

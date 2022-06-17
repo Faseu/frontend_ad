@@ -13,23 +13,23 @@ import { toastSuccess } from '@/utils/utils';
 
 interface IProps {
   dispatch: Dispatch;
-  advertiserList: StateType;
+  positionList: StateType;
   loading: boolean;
 }
 
-const AdvertiserList: React.FC<IProps> = (props) => {
+const PositionList: React.FC<IProps> = (props) => {
   const { dispatch } = props;
   const tableRef = React.createRef<any>();
 
   const handleCreate = () => {
-    history.push('/advertiser/list/create');
+    history.push('/position/list/create');
   };
   const handleEdit = (id: number) => {
-    history.push(`/advertiser/list/edit/${id}`);
+    history.push(`/position/list/edit/${id}`);
   };
   const handleEnd = (id: number) => {
     dispatch({
-      type: 'advertiserList/end',
+      type: 'positionList/end',
       payload: {
         id,
       },
@@ -110,14 +110,14 @@ const AdvertiserList: React.FC<IProps> = (props) => {
 
   useEffect(() => {
     dispatch({
-      type: 'advertiserList/fetch',
+      type: 'positionList/fetch',
       payload: {
         pageIndex: 1,
       },
     });
   }, []);
   const {
-    advertiserList: { data },
+    positionList: { data },
     loading,
   } = props;
   return (
@@ -147,15 +147,15 @@ const AdvertiserList: React.FC<IProps> = (props) => {
 
 export default connect(
   ({
-    advertiserList,
+    positionList,
     loading,
   }: {
-    advertiserList: StateType;
+    positionList: StateType;
     loading: {
       effects: Record<string, boolean>;
     };
   }) => ({
-    advertiserList,
-    loading: loading.effects['advertiserList/fetch'],
+    positionList,
+    loading: loading.effects['positionList/fetch'],
   }),
-)(AdvertiserList);
+)(PositionList);

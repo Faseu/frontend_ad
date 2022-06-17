@@ -1,0 +1,63 @@
+.uploadFile {
+  :global {
+    .ant-upload {
+      width: 104px;
+      height: 104px;
+    }
+  }
+}
+
+.picContainer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 99999;
+  width: 100%;
+  height: 100%;
+  background-color: #00000054;
+
+  .picList {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+
+    .picBox {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 250px;
+      padding: 40px 10px 20px 10px;
+      text-align: center;
+
+      &_close {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        color: #ffffffd9;
+        cursor: pointer;
+      }
+
+      & > img {
+        position: relative;
+        max-height: 900px;
+        margin: 0 20px;
+        -moz-user-select: none;
+        -webkit-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+      }
+
+      &_icon {
+        color: #fff3;
+        size: 22px;
+
+        &_active {
+          color: #ffffffd9;
+        }
+      }
+    }
+  }
+}

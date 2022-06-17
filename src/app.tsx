@@ -1,13 +1,11 @@
 import type { Settings as LayoutSettings } from '@ant-design/pro-layout';
-import { SettingDrawer } from '@ant-design/pro-layout';
-import { PageLoading } from '@ant-design/pro-layout';
+import { PageLoading, SettingDrawer } from '@ant-design/pro-layout';
 import type { RunTimeLayoutConfig } from 'umi';
 import { history } from 'umi';
 import RightContent from '@/components/RightContent';
 import Footer from '@/components/Footer';
 import fixMenuItemIcon from '@/utils/fixMenuItemIcon';
-import { queryMenuData } from './services/user/menu';
-import { currentUser as queryCurrentUser } from './services/ant-design-pro/api';
+import routes from '../config/routes';
 
 const loginPath = '/user/login';
 
@@ -27,38 +25,37 @@ export async function getInitialState(): Promise<{
   fetchUserInfo?: () => Promise<API.CurrentUser | undefined>;
   fetchMenuData?: () => Promise<any>;
 }> {
-  const fetchUserInfo = async () => {
-    try {
-      const msg = await queryCurrentUser();
-      return msg.data;
-    } catch (error) {
-      history.push(loginPath);
-    }
-    return undefined;
-  };
-  const fetchMenuData = async () => {
-    try {
-      const menuData = await queryMenuData();
-      return menuData.data;
-    } catch (error) {
-      history.push(loginPath);
-    }
-    return undefined;
-  };
+  // const fetchUserInfo = async () => {
+  //   try {
+  //   } catch (error) {
+  //     history.push(loginPath);
+  //   }
+  //   return undefined;
+  // };
+  // const fetchMenuData = async () => {
+  //   try {
+  //     const menuData = await queryMenuData();
+  //     return menuData.data;
+  //   } catch (error) {
+  //      history.push(loginPath);
+  //   }
+  //   return undefined;
+  // };
   // 如果是登录页面，不执行
   if (history.location.pathname !== loginPath) {
-    const currentUser = await fetchUserInfo();
-    const menuData = await fetchMenuData();
+    // const currentUser = await fetchUserInfo();
+    // const menuData = await fetchMenuData();
+    // const menuData = await fetchMenuData();
     return {
-      fetchUserInfo,
-      fetchMenuData,
-      menuData,
-      currentUser,
+      // fetchUserInfo,
+      // fetchMenuData,
+      menuData: routes,
+      // currentUser,
       settings: {},
     };
   }
   return {
-    fetchUserInfo,
+    // fetchUserInfo,
     settings: {},
   };
 }
@@ -82,13 +79,21 @@ export const layout: RunTimeLayoutConfig = ({ initialState, setInitialState }) =
     },
     footerRender: () => <Footer />,
     onPageChange: () => {
-      const { location } = history;
+      // const { location } = history;
       // 如果没有登录，重定向到 login
-      if (!initialState?.currentUser && location.pathname !== loginPath) {
-        history.push(loginPath);
-      }
+      // if (!initialState?.currentUser && location.pathname !== loginPath) {
+      //   history.push(loginPath);
+      // }
     },
     menuHeaderRender: undefined,
+
+    // 面包屑删除 第一个无效路由
+    breadcrumbRender: (e) => {
+      if (e && e.length > 1) {
+        return e.splice(1);
+      }
+      return e;
+    },
     // 自定义 403 页面
     // unAccessible: <div>unAccessible</div>,
     // 增加一个 loading 的状态

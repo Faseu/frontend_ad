@@ -1,0 +1,68 @@
+@import '~antd/es/style/themes/default.less';
+
+:global {
+  .ant-btn,
+  .ant-input,
+  .ant-picker,
+  .ant-upload {
+    border-radius: 4px;
+  }
+
+  .ant-select-selector {
+    border-radius: 4px !important;
+  }
+}
+
+.standardTable {
+  :global {
+    .ant-table-pagination {
+      margin-top: 24px;
+    }
+  }
+
+  .searchHead {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+
+    .searchTitle {
+      color: #000000d9;
+      font-weight: bold;
+      font-size: 20px;
+    }
+
+    .btnGroup {
+      .formFieldBtn {
+        margin-left: 10px;
+      }
+    }
+  }
+
+  .tableHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+
+    .tableTitle {
+      color: #000000d9;
+      font-weight: bold;
+      font-size: 20px;
+    }
+
+    .headerBtns {
+      .addBtn,
+      .exportBtn {
+        margin-left: 10px;
+      }
+    }
+  }
+
+  .summaryList {
+    margin-bottom: 24px;
+  }
+
+  .tableAlert {
+    margin-bottom: 16px;
+  }
+}

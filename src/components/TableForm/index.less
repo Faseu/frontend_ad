@@ -1,0 +1,58 @@
+@import '../../utils/utils.less';
+
+.tableForm {
+  .searchHead {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+
+    .searchTitle {
+      color: #000000d9;
+      font-weight: bold;
+      font-size: 20px;
+    }
+
+    .btnGroup {
+      .formFieldBtn {
+        margin-left: 10px;
+      }
+    }
+  }
+
+  .tableForm__operators {
+    margin-bottom: 16px;
+    button {
+      margin-right: 8px;
+    }
+  }
+
+  &__fields {
+    :global {
+      .ant-form-item {
+        display: flex;
+        margin-right: 0;
+        margin-bottom: 24px;
+        > .ant-form-item-label {
+          width: auto;
+          padding-right: 8px;
+          line-height: 32px;
+        }
+        .ant-form-item-control {
+          line-height: 32px;
+        }
+      }
+      .ant-form-item-control-wrapper {
+        flex: 1;
+      }
+    }
+
+    &__btnGroup {
+      display: block;
+      white-space: nowrap;
+    }
+  }
+
+  &__summary {
+    margin-bottom: 24px;
+  }
+}
